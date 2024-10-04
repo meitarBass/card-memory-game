@@ -3,7 +3,10 @@ import UIKit
 class CardView: UIView {
     
     var cornerRadius: CGFloat = 10.0
-    var cardColor: UIColor = .orange
+    
+    var cardBackColor: UIColor = .orange
+    var cardFrontColor: UIColor = .white
+    
     var borderColor: UIColor = .black
     var borderWidth: CGFloat = 2.0
 
@@ -29,8 +32,10 @@ class CardView: UIView {
     
     func renderCard() {
         let text = info.isFlipped ? info.frontText : info.backText
+        let color = info.isFlipped ? cardFrontColor : cardBackColor
+        
         let cardSize = self.bounds.size
-        let cardImage = drawCard(withText: text, size: cardSize)
+        let cardImage = drawCard(withText: text, size: cardSize, color: color)
         
         let imageView = UIImageView(image: cardImage)
         imageView.frame = self.bounds
@@ -39,7 +44,7 @@ class CardView: UIView {
         addSubview(imageView)
     }
     
-    func drawCard(withText text: String, size: CGSize) -> UIImage {
+    func drawCard(withText text: String, size: CGSize, color: UIColor) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: size)
         
         let img = renderer.image { ctx in
@@ -47,7 +52,7 @@ class CardView: UIView {
             let rectangle = CGRect(x: 0, y: 0, width: size.width, height: size.height)
             
             let path = UIBezierPath(roundedRect: rectangle, cornerRadius: cornerRadius)
-            cardColor.setFill()
+            color.setFill()
             path.fill()
             
             
@@ -71,11 +76,11 @@ class CardView: UIView {
     }
         
     @objc func flipCard() {
+        info.isFlipped.toggle()
+        
         UIView.transition(with: self, duration: 0.5, options: [.transitionFlipFromRight], animations: {
             self.viewWithTag(100)?.removeFromSuperview()
             self.renderCard()
         })
-        
-        info.isFlipped.toggle()
     }
 }
