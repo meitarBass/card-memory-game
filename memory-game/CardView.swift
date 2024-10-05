@@ -24,10 +24,6 @@ class CardView: UIView {
     
     private func setupCard() {
         renderCard()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flipCard))
-        self.addGestureRecognizer(tapGesture)
-        self.isUserInteractionEnabled = true
     }
     
     func renderCard() {

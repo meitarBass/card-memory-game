@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  memory-game
-//
-//  Created by Meitar Basson on 04/10/2024.
-//
-
 import UIKit
 
 @main

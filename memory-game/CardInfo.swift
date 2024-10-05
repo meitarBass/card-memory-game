@@ -2,7 +2,7 @@ import Foundation
 
 struct CardInfo {
     
-    var pairID: String
+    var pairID: Int
     var frontText: String
     var backText: String
     var isFlipped: Bool
