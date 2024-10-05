@@ -1,12 +1,42 @@
 import UIKit
 
-class ViewController: UIViewController {
+enum Level: String {
+    case easy = "EASY"
+    case medium = "MEDIUM"
+    case hard = "HARD"
+}
+
+class GameViewController: UIViewController {
+        
+    @IBOutlet var difficultyLevel: UILabel!
+    @IBOutlet var playerOneLabel: UILabel!
+    @IBOutlet var playerTwoLabel: UILabel!
+    
+    @IBOutlet var playerOneScoreLabel: UILabel!
+    @IBOutlet var playerTwoScoreLabel: UILabel!
+    
+    var level: Level?
+        
+    var playerOneScore = 0 {
+        didSet {
+            playerOneScoreLabel.text = "score: \(playerOneScore)"
+        }
+    }
+    
+    var playerTwoScore = 0 {
+        didSet {
+            playerTwoScoreLabel.text = "score: \(playerTwoScore)"
+        }
+    }
+    
+    @IBOutlet var cardsScrollView: UIScrollView!
     
     var cardsInfo = [CardInfo]()
     var cardViews = [CardView]()
     var timer: Timer!
     
     var flippedCards = [CardView]()
+    var isPlayerOneTurn = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +49,9 @@ class ViewController: UIViewController {
             self.flipAllCards()
             self.timer.invalidate()
         })
+        
+        guard let level = level else { return }
+        difficultyLevel.text = "\(level.rawValue)"
     }
     
     func createCards(cardsAmount: Int) {
@@ -39,10 +72,6 @@ class ViewController: UIViewController {
     }
     
     func addCardsToView(rows: Int, columns: Int) {
-        let scrollView = UIScrollView(frame: view.bounds)
-        scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(scrollView)
-        
         // Calculate the size of each card based on the screen size
         let padding: CGFloat = 20
         let cardWidth = (view.frame.width - padding * CGFloat(columns + 1)) / CGFloat(columns)
@@ -53,14 +82,14 @@ class ViewController: UIViewController {
         for row in 0..<rows {
             for col in 0..<columns {
                 let xPosition = padding + CGFloat(col) * (cardWidth + padding)
-                let yPosition = padding + CGFloat(row) * (cardHeight + padding) + 100 // 100 for top margin
+                let yPosition = padding + CGFloat(row) * (cardHeight + padding) // 100 for top margin
                 
                 let cardView = CardView(frame: CGRect(x: xPosition, y: yPosition, width: cardWidth, height: cardHeight), info: cardsInfo[3 * row + col])
                 
                 makeCardTappable(card: cardView)
                 
                 
-                scrollView.addSubview(cardView)
+                cardsScrollView.addSubview(cardView)
                 cardViews.append(cardView)
                 
                 // To figure out the scrollView height
@@ -69,7 +98,7 @@ class ViewController: UIViewController {
         }
         
         cardViews.shuffle()
-        scrollView.contentSize = CGSize(width: view.frame.width, height: contentHeight)
+        cardsScrollView.contentSize = CGSize(width: view.frame.width, height: contentHeight)
     }
     
     func makeCardTappable(card: CardView) {
@@ -91,7 +120,12 @@ class ViewController: UIViewController {
     
     func checkIsPair() {
         if flippedCards[0].info.pairID == flippedCards[1].info.pairID {
-            print("pair")
+            if isPlayerOneTurn {
+                playerOneScore += 1
+            }  else {
+                playerTwoScore += 1
+                
+            }
             // remove from array of cards so we can't flip anymore
             flippedCards.removeAll()
         } else {
@@ -101,6 +135,8 @@ class ViewController: UIViewController {
                 self.flippedCards[1].flipCard()
                 self.flippedCards.removeAll()
                 self.enableAllCards()
+                self.isPlayerOneTurn.toggle()
+                self.flipColors()
             }
             disableAllCards()
         }
@@ -122,6 +158,11 @@ class ViewController: UIViewController {
         for card in self.cardViews {
             card.flipCard()
         }
+    }
+    
+    func flipColors() {
+        playerOneLabel.textColor = isPlayerOneTurn ? .systemRed : .black
+        playerTwoLabel.textColor = isPlayerOneTurn ? .black : .systemRed
     }
 }
 
