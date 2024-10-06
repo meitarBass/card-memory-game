@@ -38,20 +38,44 @@ class GameViewController: UIViewController {
     var flippedCards = [CardView]()
     var isPlayerOneTurn = true
     
+    var totalFlippedCards = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        createCards(cardsAmount: 4 * 3) //TODO: Change to constants
-        addCardsToView(rows: 4, columns: 3)
+        createLevel()
+        disableCards()
         
         timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { _ in
             self.flipAllCards()
             self.timer.invalidate()
+            self.enableCards()
         })
         
         guard let level = level else { return }
         difficultyLevel.text = "\(level.rawValue)"
+    }
+    
+    func createLevel() {
+        var rows = 0, columns = 0
+        
+        switch level {
+        case .easy:
+            rows = 2
+            columns = 3
+        case .medium:
+            rows = 4
+            columns = 4
+        case .hard:
+            rows = 6
+            columns = 3
+        case nil:
+            break
+        }
+        
+        createCards(cardsAmount: rows * columns)
+        addCardsToView(rows: rows, columns: columns)
     }
     
     func createCards(cardsAmount: Int) {
@@ -112,43 +136,61 @@ class GameViewController: UIViewController {
             card.flipCard()
             flippedCards.append(card)
             
-            if flippedCards.count == 2 {
+            if flippedCards.count % 2 == 0 {
                 checkIsPair()
             }
         }
     }
     
     func checkIsPair() {
-        if flippedCards[0].info.pairID == flippedCards[1].info.pairID {
+        if flippedCards[totalFlippedCards].info.pairID == flippedCards[totalFlippedCards + 1].info.pairID {
+            // TODO: Check if game finished, add who win and maybe refresh
             if isPlayerOneTurn {
                 playerOneScore += 1
             }  else {
                 playerTwoScore += 1
                 
             }
-            // remove from array of cards so we can't flip anymore
-            flippedCards.removeAll()
+            
+            // disable cards
+            flippedCards[totalFlippedCards].isUserInteractionEnabled = false
+            flippedCards[totalFlippedCards + 1].isUserInteractionEnabled = false
+            
+            cardViews.removeAll(where: { $0.info.pairID == flippedCards[totalFlippedCards].info.pairID })
+            
+            if cardViews.isEmpty {
+                createNewGame()
+            }
+            
+            // add to counter
+            totalFlippedCards += 2
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 guard let self = self else { return }
-                self.flippedCards[0].flipCard()
-                self.flippedCards[1].flipCard()
-                self.flippedCards.removeAll()
-                self.enableAllCards()
+                
+                // not a match - flip back
+                self.flippedCards[totalFlippedCards].flipCard()
+                self.flippedCards[totalFlippedCards + 1].flipCard()
+                
+                // remove from array
+                self.flippedCards.remove(at: totalFlippedCards + 1) // count start at 0
+                self.flippedCards.remove(at: totalFlippedCards)
+                
+                self.enableCards()
                 self.isPlayerOneTurn.toggle()
                 self.flipColors()
             }
-            disableAllCards()
+            disableCards()
         }
     }
     
-    func disableAllCards() {
+    func disableCards() {
         for card in cardViews {
             card.isUserInteractionEnabled = false
         }
     }
     
-    func enableAllCards() {
+    func enableCards() {
         for card in cardViews {
             card.isUserInteractionEnabled = true
         }
@@ -163,6 +205,27 @@ class GameViewController: UIViewController {
     func flipColors() {
         playerOneLabel.textColor = isPlayerOneTurn ? .systemRed : .black
         playerTwoLabel.textColor = isPlayerOneTurn ? .black : .systemRed
+    }
+    
+    func createNewGame() {
+        let res = playerOneScore > playerTwoScore ? "Player 1 won" : playerOneScore == playerTwoScore ? "It's a tie" : "Player 2 won"
+        let ac = UIAlertController(title: "\(res)", message: "Would you like to play another game?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            if let navController = self.navigationController {
+                if let newVC = self.storyboard?.instantiateViewController(withIdentifier: "GameVC") as? GameViewController {
+                    var viewControllers = navController.viewControllers
+                    
+                    newVC.level = self.level
+                    viewControllers.removeLast()
+                    viewControllers.append(newVC)
+                    
+                    self.navigationController?.setViewControllers(viewControllers, animated: true)
+                }
+            }
+        }))
+        
+        present(ac, animated: true)
     }
 }
 
