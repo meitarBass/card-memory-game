@@ -82,7 +82,7 @@ class GameViewController: UIViewController {
         var pairID = 0
         
         for num in 0 ..< cardsAmount {
-            let cardInfo = CardInfo(pairID: pairID, frontText: "\(num + 1)", backText: "", isFlipped: true)
+            let cardInfo = CardInfo(pairID: pairID, frontText: "\(num + 1)🎃", backText: "", isFlipped: true)
             
             // TODO: Get card info from file and add to array
             cardsInfo.append(cardInfo)
