@@ -17,6 +17,15 @@
 		A9C3B4DF2CB054020031272B /* Base in Resources */ = {isa = PBXBuildFile; fileRef = A9C3B4DE2CB054020031272B /* Base */; };
 		A9C3B4E72CB054900031272B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3B4E62CB054900031272B /* CardView.swift */; };
 		A9C3B4E92CB0549B0031272B /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3B4E82CB0549B0031272B /* CardInfo.swift */; };
+		A9CE7ADC2CB31B0300B361B6 /* easy_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9CE7ADB2CB31B0300B361B6 /* easy_1.txt */; };
+		A9CE7AE02CB31C8400B361B6 /* easy_3.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9CE7ADE2CB31C8400B361B6 /* easy_3.txt */; };
+		A9CE7AE12CB31C8400B361B6 /* easy_2.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9CE7ADF2CB31C8400B361B6 /* easy_2.txt */; };
+		A9CE7AE82CB3201900B361B6 /* medium_3.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9CE7AE52CB3201900B361B6 /* medium_3.txt */; };
+		A9CE7AE92CB3201900B361B6 /* medium_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9CE7AE62CB3201900B361B6 /* medium_1.txt */; };
+		A9CE7AEA2CB3201900B361B6 /* medium_2.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9CE7AE72CB3201900B361B6 /* medium_2.txt */; };
+		A9CE7AEF2CB3201E00B361B6 /* hard_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9CE7AEB2CB3201E00B361B6 /* hard_1.txt */; };
+		A9CE7AF02CB3201E00B361B6 /* hard_2.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9CE7AEC2CB3201E00B361B6 /* hard_2.txt */; };
+		A9CE7AF12CB3201E00B361B6 /* hard_3.txt in Resources */ = {isa = PBXBuildFile; fileRef = A9CE7AED2CB3201E00B361B6 /* hard_3.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +41,15 @@
 		A9C3B4E02CB054020031272B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9C3B4E62CB054900031272B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		A9C3B4E82CB0549B0031272B /* CardInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
+		A9CE7ADB2CB31B0300B361B6 /* easy_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = easy_1.txt; sourceTree = "<group>"; };
+		A9CE7ADE2CB31C8400B361B6 /* easy_3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = easy_3.txt; sourceTree = "<group>"; };
+		A9CE7ADF2CB31C8400B361B6 /* easy_2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = easy_2.txt; sourceTree = "<group>"; };
+		A9CE7AE52CB3201900B361B6 /* medium_3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_3.txt; sourceTree = "<group>"; };
+		A9CE7AE62CB3201900B361B6 /* medium_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_1.txt; sourceTree = "<group>"; };
+		A9CE7AE72CB3201900B361B6 /* medium_2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_2.txt; sourceTree = "<group>"; };
+		A9CE7AEB2CB3201E00B361B6 /* hard_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hard_1.txt; sourceTree = "<group>"; };
+		A9CE7AEC2CB3201E00B361B6 /* hard_2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hard_2.txt; sourceTree = "<group>"; };
+		A9CE7AED2CB3201E00B361B6 /* hard_3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hard_3.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,19 +82,76 @@
 		A9C3B4D12CB054010031272B /* memory-game */ = {
 			isa = PBXGroup;
 			children = (
+				A9CE7ADD2CB31B6D00B361B6 /* memory-game-files */,
+				A9CE7AD82CB3157200B361B6 /* ViewControllers */,
 				A9C3B4D22CB054010031272B /* AppDelegate.swift */,
 				A9C3B4D42CB054010031272B /* SceneDelegate.swift */,
-				A9C3B4D62CB054010031272B /* GameViewController.swift */,
 				A9C3B4D82CB054010031272B /* Main.storyboard */,
 				A9C3B4DB2CB054020031272B /* Assets.xcassets */,
 				A9C3B4DD2CB054020031272B /* LaunchScreen.storyboard */,
 				A9C3B4E02CB054020031272B /* Info.plist */,
 				A9C3B4E62CB054900031272B /* CardView.swift */,
 				A9C3B4E82CB0549B0031272B /* CardInfo.swift */,
-				A9941BBA2CB1D34D009F9BAB /* MainViewController.swift */,
 				A9941BBC2CB1D3A3009F9BAB /* gameButton.swift */,
 			);
 			path = "memory-game";
+			sourceTree = "<group>";
+		};
+		A9CE7AD72CB3156D00B361B6 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				A9CE7AE22CB31FB900B361B6 /* easy */,
+				A9CE7AE32CB31FDB00B361B6 /* medium */,
+				A9CE7AE42CB31FE000B361B6 /* hard */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		A9CE7AD82CB3157200B361B6 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A9C3B4D62CB054010031272B /* GameViewController.swift */,
+				A9941BBA2CB1D34D009F9BAB /* MainViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A9CE7ADD2CB31B6D00B361B6 /* memory-game-files */ = {
+			isa = PBXGroup;
+			children = (
+				A9CE7AD72CB3156D00B361B6 /* Content */,
+			);
+			path = "memory-game-files";
+			sourceTree = "<group>";
+		};
+		A9CE7AE22CB31FB900B361B6 /* easy */ = {
+			isa = PBXGroup;
+			children = (
+				A9CE7ADB2CB31B0300B361B6 /* easy_1.txt */,
+				A9CE7ADF2CB31C8400B361B6 /* easy_2.txt */,
+				A9CE7ADE2CB31C8400B361B6 /* easy_3.txt */,
+			);
+			path = easy;
+			sourceTree = "<group>";
+		};
+		A9CE7AE32CB31FDB00B361B6 /* medium */ = {
+			isa = PBXGroup;
+			children = (
+				A9CE7AE62CB3201900B361B6 /* medium_1.txt */,
+				A9CE7AE72CB3201900B361B6 /* medium_2.txt */,
+				A9CE7AE52CB3201900B361B6 /* medium_3.txt */,
+			);
+			path = medium;
+			sourceTree = "<group>";
+		};
+		A9CE7AE42CB31FE000B361B6 /* hard */ = {
+			isa = PBXGroup;
+			children = (
+				A9CE7AEB2CB3201E00B361B6 /* hard_1.txt */,
+				A9CE7AEC2CB3201E00B361B6 /* hard_2.txt */,
+				A9CE7AED2CB3201E00B361B6 /* hard_3.txt */,
+			);
+			path = hard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +214,16 @@
 			files = (
 				A9C3B4DC2CB054020031272B /* Assets.xcassets in Resources */,
 				A9C3B4DF2CB054020031272B /* Base in Resources */,
+				A9CE7ADC2CB31B0300B361B6 /* easy_1.txt in Resources */,
+				A9CE7AF02CB3201E00B361B6 /* hard_2.txt in Resources */,
+				A9CE7AE92CB3201900B361B6 /* medium_1.txt in Resources */,
+				A9CE7AEA2CB3201900B361B6 /* medium_2.txt in Resources */,
+				A9CE7AE82CB3201900B361B6 /* medium_3.txt in Resources */,
+				A9CE7AE02CB31C8400B361B6 /* easy_3.txt in Resources */,
+				A9CE7AEF2CB3201E00B361B6 /* hard_1.txt in Resources */,
+				A9CE7AF12CB3201E00B361B6 /* hard_3.txt in Resources */,
 				A9C3B4DA2CB054010031272B /* Base in Resources */,
+				A9CE7AE12CB31C8400B361B6 /* easy_2.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,8 +398,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -342,8 +425,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

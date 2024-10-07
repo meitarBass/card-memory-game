@@ -39,10 +39,15 @@ class GameViewController: UIViewController {
     var isPlayerOneTurn = true
     
     var totalFlippedCards = 0
+    var useBigFont = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            useBigFont = true
+        }
         
         createLevel()
         disableCards()
@@ -74,27 +79,10 @@ class GameViewController: UIViewController {
             break
         }
         
-        createCards(cardsAmount: rows * columns)
+        loadLevel()
         addCardsToView(rows: rows, columns: columns)
     }
-    
-    func createCards(cardsAmount: Int) {
-        var pairID = 0
         
-        for num in 0 ..< cardsAmount {
-            let cardInfo = CardInfo(pairID: pairID, frontText: "\(num + 1)🎃", backText: "", isFlipped: true)
-            
-            // TODO: Get card info from file and add to array
-            cardsInfo.append(cardInfo)
-            
-            if num % 2 == 1 {
-                pairID += 1
-            }
-        }
-        
-        cardsInfo.shuffle()
-    }
-    
     func addCardsToView(rows: Int, columns: Int) {
         // Calculate the size of each card based on the screen size
         let padding: CGFloat = 20
@@ -103,12 +91,15 @@ class GameViewController: UIViewController {
         
         var contentHeight: CGFloat = 0
         
+        var counter = 0
+        
         for row in 0..<rows {
             for col in 0..<columns {
                 let xPosition = padding + CGFloat(col) * (cardWidth + padding)
                 let yPosition = padding + CGFloat(row) * (cardHeight + padding) // 100 for top margin
                 
-                let cardView = CardView(frame: CGRect(x: xPosition, y: yPosition, width: cardWidth, height: cardHeight), info: cardsInfo[3 * row + col])
+                let cardView = CardView(frame: CGRect(x: xPosition, y: yPosition, width: cardWidth, height: cardHeight), info: cardsInfo[counter], useBigFont: useBigFont)
+                counter += 1
                 
                 makeCardTappable(card: cardView)
                 
@@ -205,6 +196,34 @@ class GameViewController: UIViewController {
     func flipColors() {
         playerOneLabel.textColor = isPlayerOneTurn ? .systemRed : .black
         playerTwoLabel.textColor = isPlayerOneTurn ? .black : .systemRed
+    }
+    
+    func loadLevel() {
+        guard let level = level else { return }
+        let randomFile = Int.random(in: 1...3)
+        
+        guard let levelURL = Bundle.main.url(forResource: "\(level.rawValue.lowercased())_\(randomFile)", withExtension: "txt") else {
+            fatalError("Could not find the file in the app bundle.")
+        }
+        
+        guard let levelString = try? String(contentsOf: levelURL) else {
+            fatalError("Could not load level1.txt from the app bundle.")
+        }
+        
+        let lines = levelString.components(separatedBy: "\n")
+        var paidID = 0
+        
+        for (index, line) in lines.enumerated() {
+            if !line.isEmpty {
+                cardsInfo.append(CardInfo(pairID: paidID, frontText: line, backText: "", isFlipped: true))
+                if index % 2 == 1 {
+                    paidID += 1
+                }
+            }
+        }
+        
+        
+        cardsInfo.shuffle()
     }
     
     func createNewGame() {
