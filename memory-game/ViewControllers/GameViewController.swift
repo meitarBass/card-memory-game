@@ -127,7 +127,7 @@ class GameViewController: UIViewController {
             card.flipCard()
             flippedCards.append(card)
             
-            if flippedCards.count % 2 == 0 {
+            if flippedCards.count.isMultiple(of: 2) {
                 checkIsPair()
             }
         }

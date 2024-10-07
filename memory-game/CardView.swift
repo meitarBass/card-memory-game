@@ -11,6 +11,8 @@ class CardView: UIView {
     var borderWidth: CGFloat = 3.0
 
     var info: CardInfo!
+    var textLabel: UILabel!
+    var imageView: UIImageView!
     
     var useBigFont = false
     
@@ -26,13 +28,29 @@ class CardView: UIView {
     }
     
     private func setupCard() {
+        setupLabel()
         renderCard()
+        
         // Add shadow
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 0.55
         self.layer.shadowOffset = CGSize(width: 8, height: 4)
         self.layer.shadowRadius = 3
         self.layer.masksToBounds = false
+    }
+    
+    private func setupLabel() {
+        textLabel = UILabel()
+        textLabel.textAlignment = .center
+        textLabel.textColor = .black
+        textLabel.numberOfLines = 0
+        
+        let fontSize: CGFloat = useBigFont ? (info.frontText.count > 3 ? 24 : 54) : (info.frontText.count > 3 ? 14 : 36)
+        textLabel.font = UIFont.systemFont(ofSize: fontSize)
+        
+        textLabel.text = info.isFlipped ? info.frontText : info.backText
+        
+        textLabel.frame = CGRect(x: 10, y: self.bounds.height / 2 - 20, width: self.bounds.width - 20, height: 40)
     }
     
     func renderCard() {
@@ -42,11 +60,12 @@ class CardView: UIView {
         let cardSize = self.bounds.size
         let cardImage = drawCard(withText: text, size: cardSize, color: color)
         
-        let imageView = UIImageView(image: cardImage)
+        imageView = UIImageView(image: cardImage)
         imageView.frame = self.bounds
-        imageView.tag = 100 // tagging to remove / replace old image later
-        
+    
         addSubview(imageView)
+        guard let textLabel = self.textLabel else { return }
+        addSubview(textLabel)
     }
     
     func drawCard(withText text: String, size: CGSize, color: UIColor) -> UIImage {
@@ -64,38 +83,6 @@ class CardView: UIView {
             borderColor.setStroke()
             path.lineWidth = borderWidth
             path.stroke()
-            
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .center
-            
-            var fontSize: CGFloat
-            var fontHeight: CGFloat = 40
-            
-            if useBigFont {
-                fontHeight += 40
-                if text.count > 3 {
-                    fontSize = 32
-                } else {
-                    fontSize = 54
-                }
-            } else {
-                if text.count > 3 {
-                    fontSize = 12
-                } else {
-                    fontSize = 40
-                }
-            }
-            
-            
-                   
-            let attrs: [NSAttributedString.Key: Any] = [
-                .font: UIFont.systemFont(ofSize: fontSize),
-                .paragraphStyle: paragraphStyle,
-                .foregroundColor: UIColor.black
-            ]
-                   
-            let textRect = CGRect(x: 0, y: size.height / 2 - 20, width: size.width, height: fontHeight)
-            text.draw(in: textRect, withAttributes: attrs)
         }
         return img
     }
@@ -103,8 +90,14 @@ class CardView: UIView {
     @objc func flipCard() {
         info.isFlipped.toggle()
         
+        textLabel.text = info.isFlipped ? info.frontText : info.backText
+        
         UIView.transition(with: self, duration: 0.5, options: [.transitionFlipFromRight], animations: {
-            self.viewWithTag(100)?.removeFromSuperview()
+            guard let imageView = self.imageView else { return }
+            guard let textLabel = self.textLabel else { return }
+            
+            imageView.removeFromSuperview()
+            textLabel.removeFromSuperview()
             self.renderCard()
         })
     }
